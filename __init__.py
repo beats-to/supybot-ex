@@ -1,8 +1,6 @@
 ###
-# Copyright (c) 2011, AS400XL
+# Copyright (c) 2014, as4
 # All rights reserved.
-#
-#
 ###
 
 """
@@ -28,7 +26,7 @@ __url__ = 'irc://irc.mrspring.net'
 
 import config
 import plugin
-reload(plugin)  # In case we're being reloaded.
+reload(plugin) # In case we're being reloaded.
 # Add more reloads here if you add third-party modules and want them to be
 # reloaded when this plugin is reloaded.  Don't forget to import them as well!
 

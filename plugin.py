@@ -1,3 +1,6 @@
+###
+# Copyright (c) 2014, as4
+###
 from supybot.commands import wrap, optional
 import supybot.callbacks as callbacks
 import urllib2
@@ -26,7 +29,7 @@ class Ex(callbacks.Plugin):
 
         # show disclaimer URL if called
         if a == 'info' and ic is None and oc is None:
-            irc.reply('Disclaimer: https://www.google.ie/intl/en/help/'
+            irc.reply('Disclaimer: https://www.google.com/help/'
                       + 'currency_disclaimer.html')
             return
 
@@ -54,6 +57,14 @@ class Ex(callbacks.Plugin):
         response = opener.open(url, None, timeout)
 
         # grab the data and tidy up
+        try:
+            response = opener.open(url, None, timeout)
+        except urllib2.HTTPError, s:
+            irc.reply('HTTP Error - (' + str(s) + ')')
+            return
+        except urllib2.URLError, s:
+            irc.reply('Url Error - (' + str(s) + ')')
+            return
         page = response.read()
         response.close()
         opener.close()
@@ -76,6 +87,7 @@ class Ex(callbacks.Plugin):
 
         irc.reply(page)
         del page, url, timeout
+
     ex = wrap(ex, ['somethingWithoutSpaces',
               optional('somethingWithoutSpaces'),
               optional('somethingWithoutSpaces')])

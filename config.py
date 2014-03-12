@@ -1,12 +1,8 @@
 ###
-# Copyright (c) 2011, AS400XL
-# All rights reserved.
-#
-#
+# Copyright (c) 2014, as4
 ###
 
 import supybot.conf as conf
-import supybot.registry as registry
 
 
 def configure(advanced):
@@ -14,13 +10,12 @@ def configure(advanced):
     # a bool that specifies whether the user identified himself as an advanced
     # user or not.  You should effect your configuration by manipulating the
     # registry as appropriate.
-    from supybot.questions import expect, anything, something, yn
     conf.registerPlugin('Ex', True)
 
 
-Messin = conf.registerPlugin('Ex')
+Ex = conf.registerPlugin('Ex')
 # This is where your configuration variables (if any) should go.  For example:
-# conf.registerGlobalValue(Messin, 'someConfigVariableName',
+# conf.registerGlobalValue(Ex, 'someConfigVariableName',
 #     registry.Boolean(False, """Help for someConfigVariableName."""))
 
 
