@@ -54,7 +54,6 @@ class Ex(callbacks.Plugin):
         opener = urllib2.build_opener()
         # add user-agent
         opener.addheaders = [('User-agent', 'Mozilla/5.0')]
-        response = opener.open(url, None, timeout)
 
         # grab the data and tidy up
         try:
