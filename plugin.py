@@ -62,30 +62,31 @@ class Ex(callbacks.Plugin):
             irc.reply('HTTP Error - (' + str(s) + ')')
             return
         except urllib2.URLError, s:
-            irc.reply('Url Error - (' + str(s) + ')')
+            irc.reply('URL Error - (' + str(s) + ')')
             return
-        page = response.read()
-        response.close()
-        opener.close()
-
-        # Trim
-        page = page[page.find(r'<div id=currency_converter_result>'):]
-        page = page[:page.find(r'<input')-1]
-
-        # if the tag is present but contains no data, its length will be 34
-        if len(page) == 34:
-            page = 'Invalid Currency.'
-        # in the event of a conversion failure, '\nCould not convert.' appears
-        elif page.find(r'Could not convert.') != -1:
-            page = 'Could not convert.'
         else:
-            # remove tags and use the data
-            page = page.replace(r'<div id=currency_converter_result>', '', 1)
-            page = page.replace(r'<span class=bld>', '', 1)
-            page = page.replace(r'</span>', '', 1)
+            page = response.read()
+            response.close()
+            opener.close()
+    
+            # Trim
+            page = page[page.find(r'<div id=currency_converter_result>'):]
+            page = page[:page.find(r'<input')-1]
+    
+            # if the tag is present but contains no data, its length will be 34
+            if len(page) == 34:
+                page = 'Invalid Currency.'
+            # in the event of a conversion failure, '\nCould not convert.' appears
+            elif page.find(r'Could not convert.') != -1:
+                page = 'Could not convert.'
+            else:
+                # remove tags and use the data
+                page = page.replace(r'<div id=currency_converter_result>', '', 1)
+                page = page.replace(r'<span class=bld>', '', 1)
+                page = page.replace(r'</span>', '', 1)
 
-        irc.reply(page)
-        del page, url, timeout
+            irc.reply(page)
+            del page, url, timeout
 
     ex = wrap(ex, ['somethingWithoutSpaces',
               optional('somethingWithoutSpaces'),
